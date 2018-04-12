@@ -1,0 +1,24 @@
+<pro-header [title]="'Page Name'"></pro-header>
+<nz-card>
+    <nz-sf layout="inline" [schema]="searchSchema"
+        [actions]="searchActions" (onChange)="params=$event.value">
+    </nz-sf>
+    <!-- <simple-table #st [data]="url" [columns]="columns" [extraParams]="params"></simple-table> -->
+    <simple-table #st [data]="users" [ps]="3" [columns]="columns">
+        <ng-template st-row="custom" type="title" let-c>
+            {{ c.title }}
+            <nz-dropdown nzTrigger="click" [nzClickHide]="false">
+                <i class="anticon anticon-smile-o ant-table-filter-icon" nz-dropdown></i>
+                <div class="ant-table-filter-dropdown p-sm">
+                    <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" class="width-sm mr-sm">
+                    <button nz-button [nzType]="'primary'" (click)="st.load(2)">Search</button>
+                </div>
+            </nz-dropdown>
+        </ng-template>
+        <ng-template st-row="custom" let-item let-index="index">
+            <nz-tooltip [nzTitle]="'年龄：' + item.age">
+                <span nz-tooltip>tooltip: {{item.age}}-{{index}}</span>
+            </nz-tooltip>
+        </ng-template>
+    </simple-table>
+</nz-card>
