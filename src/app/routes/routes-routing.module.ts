@@ -22,13 +22,17 @@ import { UserListComponent } from './user-list/user-list.component';
 import { DishesListComponent } from './dishes-list/dishes-list.component';
 import { OrderListComponent } from './order-list/order-list.component';
 import { MenuListComponent } from './menu-list/menu-list.component';
+import { BannerComponent } from './banner/banner.component';
+import { SummaryComponent } from './summary/summary.component';
+import { ArticleEditComponent } from './article-edit/article-edit.component';
+import { ArticleListComponent } from './article/article.component';
 
 const routes: Routes = [
     {
         path: '',
         component: LayoutDefaultComponent,
         children: [
-            { path: '', redirectTo: 'categorylist', pathMatch: 'full' },
+            { path: '', redirectTo: 'summary', pathMatch: 'full' },
             {
                 path: 'categorylist',
                 component: CategoryListComponent,
@@ -54,6 +58,31 @@ const routes: Routes = [
                 component: UserListComponent,
                 data: { title: '员工管理' }
             },
+            {
+                path: 'banner',
+                component: BannerComponent,
+                data: {title: 'banner管理'}
+            },
+            {
+                path: 'callback',
+                component: CallbackComponent,
+                data: {title: '意见反馈'}
+            },
+            {
+                path: 'summary',
+                component: SummaryComponent,
+                data: {title: '订单总览'}
+            },
+            {
+                path: 'article-edit/:id',
+                component: ArticleEditComponent,
+                data: {title: '文章编辑'}
+            },
+            {
+                path: 'article',
+                component: ArticleListComponent,
+                data: {title: '文章管理'}
+            }
             // { path: 'dashboard', component: DashboardComponent, data: { title: '仪表盘' } },
             // 业务子模块
             // { path: 'widgets', loadChildren: './widgets/widgets.module#WidgetsModule' }
@@ -77,11 +106,11 @@ const routes: Routes = [
         ]
     },
     // 单页不包裹Layout
-    { path: 'callback/:type', component: CallbackComponent },
+    // { path: 'callback/:type', component: CallbackComponent },
     { path: '403', component: Exception403Component },
     { path: '404', component: Exception404Component },
     { path: '500', component: Exception500Component },
-    { path: '**', redirectTo: 'categorylist' }
+    { path: '**', redirectTo: 'passport/login' }
 ];
 
 @NgModule({

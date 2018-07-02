@@ -83,29 +83,49 @@ export class StartupService {
                 group: true,
                 children: [
                     {
+                        text: '订单总览',
+                        link: '/summary',
+                        icon: 'anticon anticon-schedule',
+                    },
+                    {
                         text: '分类管理',
                         link: '/categorylist',
-                        icon: 'icon-speedometer'
+                        icon: 'anticon anticon-tag'
                     },
                     {
                         text: '菜式管理',
                         link: '/disheslist',
-                        icon: 'icon-rocket',
+                        icon: 'anticon anticon-shop',
                     },
                     {
                         text: '每日菜单管理',
                         link: '/menulist',
-                        icon: 'icon-rocket',
+                        icon: 'anticon anticon-appstore',
+                    },
+                    {
+                        text: 'Banner管理',
+                        link: '/banner',
+                        icon: 'anticon anticon-picture',
+                    },
+                    {
+                        text: '文章管理',
+                        link: '/article',
+                        icon: 'anticon anticon-book',
                     },
                     {
                         text: '订单管理',
                         link: '/orderlist',
-                        icon: 'icon-rocket',
+                        icon: 'anticon anticon-solution',
                     },
                     {
                         text: '员工管理',
                         link: '/userlist',
-                        icon: 'icon-rocket',
+                        icon: 'anticon anticon-user',
+                    },
+                    {
+                        text: '意见反馈',
+                        link: '/callback',
+                        icon: 'anticon anticon-mail',
                     },
                 ]
             }

@@ -5,8 +5,10 @@
 
 export const environment = {
     chore: false,
-    SERVER_URL: `./`,
+    SERVER_URL: `http://localhost:4200/`,
     production: false,
     hmr: false,
-    useHash: true
+    useHash: true,
+    baseHref: '/',
+    qiniuDomain: 'http://image.test.dockerrepo.jasonlife.me'
 };

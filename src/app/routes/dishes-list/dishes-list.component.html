@@ -1,6 +1,82 @@
-<pro-header [title]="'Page Name'"></pro-header>
+<pro-header></pro-header>
 <nz-card>
-    <nz-sf layout="inline" [schema]="searchSchema"
-        [actions]="searchActions" (onChange)="params=$event.value"></nz-sf>
-    <simple-table #st [data]="url" [columns]="columns" [extraParams]="params"></simple-table>
+    <!-- <nz-sf layout="inline" [schema]="searchSchema" [actions]="searchActions" (onChange)="params.search=$event.value">
+    </nz-sf> -->
+    <button nz-button [nzType]="'dashed'" (click)="showMenuManageModal('C')" class="ant-btn__block mt-md">
+        <i class="anticon anticon-plus"></i>
+        <span>新增菜式</span>
+    </button>
+    <nz-table #nzTable [nzAjaxData]="dataSet" [nzPageSize]="_pageSize" [nzTotal]="_total" [(nzPageIndex)]="_current" (nzPageIndexChange)="loadData()"
+        [nzLoading]="http.loading" [nzShowTotal]="true">
+        <thead nz-thead>
+            <tr>
+                <th nz-th class="text-center">
+                    <span>菜式名称</span>
+                </th>
+                <th nz-th class="text-center">
+                    <span>所属分类</span>
+                    <nz-dropdown [nzTrigger]="'click'">
+                        <i class="anticon anticon-filter" nz-dropdown></i>
+                        <ul nz-menu>
+                            <nz-radio-group [(ngModel)]="tempFilter.category_id">
+                                <li nz-menu-item *ngFor="let category of categoryList">
+                                    <label nz-radio [nzValue]="category.id">
+                                        <span>{{category.name}}</span>
+                                    </label>
+                                </li>
+                            </nz-radio-group>
+                        </ul>
+                        <div nz-table-filter>
+                            <span nz-table-filter-confirm (click)="searchWithFilter()">OK</span>
+                            <span nz-table-filter-clear (click)="resetFilter()">Reset</span>
+                        </div>
+                    </nz-dropdown>
+                </th>
+                <th nz-th class="text-center">
+                    <span>缩略图</span>
+                </th>
+                <th nz-th class="text-center">
+                    <span>创建时间</span>
+                </th>
+                <th nz-th class="text-center">
+                    <span>更新时间</span>
+                </th>
+                <th nz-th class="text-center">
+                    <span>操作</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody nz-tbody>
+            <ng-template ngFor let-data [ngForOf]="nzTable.data">
+                <tr nz-tbody-tr class="text-center">
+                    <td>
+                        <span>{{data.name}}</span>
+                    </td>
+                    <td>
+                        <span *ngFor="let category of data.categories;last as isLast">{{category.name}}
+                            <span *ngIf="!isLast">/</span>
+                        </span>
+                    </td>
+                    <td>
+                        <img [src]="data.image_url+'?imageView2/0/w/100/h/100'" alt="" (click)="open(data.image_url)">
+                    </td>
+                    <td nz-td>
+                        <span>{{data.created_at}}</span>
+                    </td>
+                    <td nz-td>
+                        <span>{{data.updated_at}}</span>
+                    </td>
+                    <td nz-td>
+                        <span>
+                            <a (click)="showMenuManageModal('U', data)">编辑</a>
+                            <span nz-table-divider></span>
+                            <nz-popconfirm (nzOnConfirm)="delete(data.id)" [nzTitle]="'是否要删除此行？'">
+                                <a nz-popconfirm>删除</a>
+                            </nz-popconfirm>
+                        </span>
+                    </td>
+                </tr>
+            </ng-template>
+        </tbody>
+    </nz-table>
 </nz-card>

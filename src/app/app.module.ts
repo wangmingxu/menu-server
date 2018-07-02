@@ -49,7 +49,7 @@ export function StartupServiceFactory(startupService: StartupService): Function 
             useFactory: StartupServiceFactory,
             deps: [StartupService],
             multi: true
-        }
+        },
     ],
     bootstrap: [AppComponent]
 })

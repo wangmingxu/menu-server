@@ -1,0 +1,33 @@
+<pro-header></pro-header>
+<nz-card>
+    <desc-list size="large" title="留饭总览" style="margin-bottom: 25px">
+        <desc-list-item term="留饭总数">
+            {{reserveNum}}
+        </desc-list-item>
+    </desc-list>
+    <desc-list size="large" title="订餐人数总览" style="margin-bottom: 25px">
+        <desc-list-item term="总用餐人数">
+            {{baseTotal}}
+        </desc-list-item>
+        <desc-list-item term="变更人数">
+            {{changeTotal}}
+        </desc-list-item>
+        <desc-list-item term="实际用餐人数">
+            {{currentTotal}}
+        </desc-list-item>
+    </desc-list>
+    <desc-list size="large" title="订单总览">
+        <desc-list-item term="订菜清单">
+            <div *ngFor="let menu of dataSet.menu_summary">
+                {{menu.name}}X{{menu.total}}
+            </div>
+            <div *ngIf="dataSet.menu_summary.length===0">暂无</div>
+        </desc-list-item>
+        <desc-list-item term="总订单数">
+            {{dataSet.total}}
+        </desc-list-item>
+        <desc-list-item term="下单人数">
+            {{dataSet.user_total}}
+        </desc-list-item>
+    </desc-list>
+</nz-card>

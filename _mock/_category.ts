@@ -6,10 +6,10 @@ export const CATEGORYS = {
     // 支持值为 Object 和 Array
     'GET /category': { list: [{
         id: 1,
-        name: '肉'
+        name: '肉',
     }, {
         id: 2,
-        name: '汤'
+        name: '汤',
     }], total: 2 },
     // GET 可省略
     // '/users/1': Mock.mock({ id: 1, 'rank|3': '★★★' }),

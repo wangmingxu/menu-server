@@ -1,0 +1,54 @@
+<pro-header></pro-header>
+<nz-card>
+    <nz-table #nzTable [nzAjaxData]="dataSet" [nzPageSize]="_pageSize" [nzTotal]="_total" [(nzPageIndex)]="_current" (nzPageIndexChange)="loadData()"
+        [nzLoading]="http.loading" [nzShowTotal]="true">
+        <thead nz-thead>
+            <tr>
+                <th nz-th class="text-center">
+                    <span>反馈人</span>
+                </th>
+                <th nz-th class="text-center">
+                    <span>反馈内容</span>
+                </th>
+                <th nz-th class="text-center">
+                    <span>图片(点击放大)</span>
+                </th>
+                <th nz-th class="text-center">
+                    <span>创建时间</span>
+                </th>
+                <!-- <th nz-th class="text-center">
+                    <span>操作</span>
+                </th> -->
+            </tr>
+        </thead>
+        <tbody nz-tbody>
+            <ng-template ngFor let-data [ngForOf]="nzTable.data">
+                <tr nz-tbody-tr class="text-center">
+                    <td>
+                        <span>{{data.user_name}}</span>
+                    </td>
+                    <td>
+                        <span>{{data.content}}</span>
+                    </td>
+                    <td nz-td>
+                        <img *ngFor="let image of data.images;index as i;last as isLast" [src]="image.url+'?imageView2/0/w/100/h/100'" alt="" (click)="open(i,data)">
+                    </td>
+                    <td nz-td>
+                        <span>{{data.created_at}}</span>
+                    </td>
+                    <!-- <td nz-td>
+                        <span>
+                            <a (click)="edit(data)" *ngIf="editRow!==data.id">编辑</a>
+                            <a (click)="update(data.id)" *ngIf="editRow===data.id">保存</a>
+                            <span nz-table-divider></span>
+                            <nz-popconfirm (nzOnConfirm)="delete(data.id)" [nzTitle]="'是否要删除此行？'" *ngIf="editRow!==data.id">
+                                <a nz-popconfirm>删除</a>
+                            </nz-popconfirm>
+                            <a (click)="editRow=-1" *ngIf="editRow===data.id">取消</a>
+                        </span>
+                    </td> -->
+                </tr>
+            </ng-template>
+        </tbody>
+    </nz-table>
+</nz-card>

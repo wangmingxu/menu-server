@@ -1,24 +1,82 @@
-<pro-header [title]="'Page Name'"></pro-header>
+<pro-header></pro-header>
 <nz-card>
-    <nz-sf layout="inline" [schema]="searchSchema"
-        [actions]="searchActions" (onChange)="params=$event.value">
-    </nz-sf>
-    <!-- <simple-table #st [data]="url" [columns]="columns" [extraParams]="params"></simple-table> -->
-    <simple-table #st [data]="users" [ps]="3" [columns]="columns">
-        <ng-template st-row="custom" type="title" let-c>
-            {{ c.title }}
-            <nz-dropdown nzTrigger="click" [nzClickHide]="false">
-                <i class="anticon anticon-smile-o ant-table-filter-icon" nz-dropdown></i>
-                <div class="ant-table-filter-dropdown p-sm">
-                    <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" class="width-sm mr-sm">
-                    <button nz-button [nzType]="'primary'" (click)="st.load(2)">Search</button>
-                </div>
-            </nz-dropdown>
-        </ng-template>
-        <ng-template st-row="custom" let-item let-index="index">
-            <nz-tooltip [nzTitle]="'年龄：' + item.age">
-                <span nz-tooltip>tooltip: {{item.age}}-{{index}}</span>
-            </nz-tooltip>
-        </ng-template>
-    </simple-table>
+    <!-- <nz-sf layout="inline" [schema]="searchSchema" [actions]="searchActions" (onChange)="params.search=$event.value">
+    </nz-sf> -->
+    <button nz-button [nzType]="'dashed'" (click)="add()" class="ant-btn__block mt-md">
+        <i class="anticon anticon-plus"></i>
+        <span>新增分类</span>
+    </button>
+    <nz-table #nzTable [nzAjaxData]="dataSet" [nzPageSize]="_pageSize" [nzTotal]="_total" [(nzPageIndex)]="_current" (nzPageIndexChange)="loadData()"
+        [nzLoading]="http.loading" [nzShowTotal]="true">
+        <thead nz-thead>
+            <tr>
+                <!-- <th nz-th nzExpand></th> -->
+                <th nz-th *ngFor="let column of columns" class="text-center">
+                    <span>{{column.title}}</span>
+                </th>
+                <th nz-th class="text-center">
+                    <span>创建时间</span>
+                </th>
+                <th nz-th class="text-center">
+                    <span>更新时间</span>
+                </th>
+                <th nz-th class="text-center">
+                    <span>操作</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody nz-tbody>
+            <tr nz-tbody-tr class="text-center" *ngIf="creating">
+                <!-- <td nz-td></td> -->
+                <td nz-td *ngFor="let column of columns">
+                    <nz-input [(ngModel)]="tempEditObject[column.index]" style="width: 120px;"></nz-input>
+                </td>
+                <td></td>
+                <td></td>
+                <td nz-td>
+                    <span>
+                        <a (click)="addSubmit(data)">添加</a>
+                        <span nz-table-divider></span>
+                        <a (click)="creating=false">取消</a>
+                    </span>
+                </td>
+            </tr>
+            <ng-template ngFor let-data [ngForOf]="nzTable.data">
+                <tr nz-tbody-tr class="text-center">
+                    <!-- <td nz-td nzExpand>
+                        <nz-row-expand-icon [(nzExpand)]="data.expand"></nz-row-expand-icon>
+                    </td> -->
+                    <td nz-td *ngFor="let column of columns">
+                        <span *ngIf="editRow!==data.id">{{data[column.index]}}</span>
+                        <span *ngIf="editRow===data.id">
+                            <nz-input [(ngModel)]="tempEditObject[column.index]" style="width: 120px;"></nz-input>
+                        </span>
+                    </td>
+                    <td nz-td>
+                        <span>{{data.created_at}}</span>
+                    </td>
+                    <td nz-td>
+                        <span>{{data.updated_at}}</span>
+                    </td>
+                    <td nz-td>
+                        <span>
+                            <a (click)="edit(data)" *ngIf="editRow!==data.id">编辑</a>
+                            <a (click)="update(data.id)" *ngIf="editRow===data.id">保存</a>
+                            <span nz-table-divider></span>
+                            <nz-popconfirm (nzOnConfirm)="delete(data.id)" [nzTitle]="'是否要删除此行？'" *ngIf="editRow!==data.id">
+                                <a nz-popconfirm>删除</a>
+                            </nz-popconfirm>
+                            <a (click)="editRow=-1" *ngIf="editRow===data.id">取消</a>
+                        </span>
+                    </td>
+                </tr>
+                <!-- <tr nz-tbody-tr *ngIf="data.expand">
+                    <td nz-td></td>
+                    <td nz-td colspan="4">
+                        包含菜式xxxxxx
+                    </td>
+                </tr> -->
+            </ng-template>
+        </tbody>
+    </nz-table>
 </nz-card>

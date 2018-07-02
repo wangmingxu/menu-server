@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { SettingsService } from '@delon/theme';
+import { SettingsService, _HttpClient } from '@delon/theme';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 
 @Component({
@@ -24,6 +24,7 @@ export class HeaderUserComponent implements OnInit {
     constructor(
         public settings: SettingsService,
         private router: Router,
+        private http: _HttpClient,
         @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService) {}
 
     ngOnInit(): void {
@@ -41,7 +42,9 @@ export class HeaderUserComponent implements OnInit {
     }
 
     logout() {
-        this.tokenService.clear();
-        this.router.navigateByUrl(this.tokenService.login_url);
+        // this.tokenService.clear();
+        this.http.get('admin/auth/logout').subscribe(() => {
+            this.router.navigateByUrl(this.tokenService.login_url);
+        });
     }
 }

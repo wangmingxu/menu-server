@@ -25,6 +25,6 @@
         "@testing/*": [ "testing/*" ],
         "@env": [ "environments/" ],
         "@env/*": [ "environments/*" ]
-    }
+    },
   }
 }

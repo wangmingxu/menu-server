@@ -3,5 +3,7 @@ export const environment = {
     SERVER_URL: `./`,
     production: false,
     hmr: true,
-    useHash: true
+    useHash: true,
+    baseHref: '/',
+    qiniuDomain: 'http://image.test.dockerrepo.jasonlife.me'
 };

@@ -1,6 +1,81 @@
-<pro-header [title]="'Page Name'"></pro-header>
+<pro-header></pro-header>
 <nz-card>
-    <nz-sf layout="inline" [schema]="searchSchema"
-        [actions]="searchActions" (onChange)="params=$event.value"></nz-sf>
-    <simple-table #st [data]="url" [columns]="columns" [extraParams]="params"></simple-table>
+    <!-- <nz-sf layout="inline" [schema]="searchSchema" [actions]="searchActions" (onChange)="params.search=$event.value">
+    </nz-sf> -->
+    <form nz-form [nzLayout]="'horizontal'">
+        <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSpan]="1" class="text-right">
+                <label>日期</label>
+            </div>
+            <div nz-form-control nz-col [nzSpan]="4">
+                <!-- <nz-select [(ngModel)]="day" name="day" (ngModelChange)="onDayChange($event)" [nzPlaceHolder]="'请选择日期'">
+                    <nz-option *ngFor="let item of daylist" [nzLabel]="item.label" [nzValue]="item.value">
+                    </nz-option>
+                </nz-select> -->
+                <nz-datepicker [(ngModel)]="date" (ngModelChange)="loadData()" name="date" [nzPlaceHolder]="'请选择日期'"></nz-datepicker>
+            </div>
+            <!-- <div nz-col [nzSpan]="1"></div>
+            <button nz-button [nzType]="'primary'" (click)="showMenuManageModal('C')">
+                <span>按时段录入</span>
+            </button> -->
+        </div>
+    </form>
+    <button nz-button [nzType]="'dashed'" (click)="showMenuManageModal('C')" class="ant-btn__block mt-md">
+        <i class="anticon anticon-plus"></i>
+        <span>按时段录入</span>
+    </button>
+    <nz-table #nzTable [nzAjaxData]="dataSet" [nzIsPagination]="false">
+        <thead nz-thead>
+            <tr>
+                <th nz-th>
+                    <span>时间段/菜式</span>
+                </th>
+                <!-- <th nz-th [nzWidth]="'30%'">
+                    <span>菜式</span>
+                </th> -->
+                <th nz-th>
+                    <span>操作</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody nz-tbody>
+            <ng-template ngFor let-data [ngForOf]="nzTable.data | keys">
+                <tr>
+                    <td>
+                        <nz-row-expand-icon [nzExpand]="expandList.includes(data.key)" (nzExpandChange)="collapse(data.key,$event)" [nzShowExpand]="true"></nz-row-expand-icon>
+                        {{data.key | timeRange}}
+                    </td>
+                    <!-- <td></td> -->
+                    <td>
+                        <span>
+                            <a (click)="showMenuManageModal('U',data.key)">单条录入</a>
+                            <span nz-table-divider></span>
+                            <nz-popconfirm (nzOnConfirm)="clear(data.key)" [nzTitle]="'是否要清空该时段的菜单？'">
+                                <a nz-popconfirm>清空</a>
+                            </nz-popconfirm>
+                        </span>
+                    </td>
+                </tr>
+                <ng-template ngFor let-item [ngForOf]="data.value">
+                    <tr nz-tbody-tr *ngIf="expandList.includes(data.key)">
+                        <td nz-td>
+                            <nz-row-indent [nzIndentSize]="2"></nz-row-indent>
+                            <!-- {{item.start_at | timeRange}} -->
+                            {{item.menu_name}}
+                        </td>
+                        <!-- <td nz-td>{{item.menu_name}}</td> -->
+                        <td nz-td>
+                            <span>
+                                <!-- <a (click)="showMenuManageModal('U',item)">编辑</a>
+                                <span nz-table-divider></span> -->
+                                <nz-popconfirm (nzOnConfirm)="delete(item.id)" [nzTitle]="'是否要删除此行？'">
+                                    <a nz-popconfirm>删除</a>
+                                </nz-popconfirm>
+                            </span>
+                        </td>
+                    </tr>
+                </ng-template>
+            </ng-template>
+        </tbody>
+    </nz-table>
 </nz-card>

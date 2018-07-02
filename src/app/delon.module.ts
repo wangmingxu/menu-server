@@ -209,7 +209,9 @@ import { DelonCacheModule } from '@delon/cache';
         AlainAuthModule.forRoot({
             // 受限于 https://github.com/cipchk/ng-alain/issues/246， 只支持字符串形式
             // ignores: [ `\\/login`, `assets\\/` ],
-            login_url: `/passport/login`
+            login_url: `/passport/login`,
+            token_send_place: 'url',
+            token_send_key: 'i-token'
         }),
         // acl
         AlainACLModule.forRoot(),

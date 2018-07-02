@@ -8,18 +8,36 @@ import { AlainThemeModule } from '@delon/theme';
 import { AlainACLModule } from '@delon/acl';
 import { ZORROMODULES, ABCMODULES } from '../delon.module';
 
+// custom component
+import { MenuManageModalComponent } from './components/menuManageModal/menuManageModal.component';
+import { DishesManageModalComponent } from './components/dishesManageModal/dishesManageModal.component';
+import { BannerManageModalComponent } from './components/bannerManageModal/bannerManageModal.component';
+
+// custom pipe
+import { TimeRangePipe } from './pipe/time-range.pipe';
+
+// custom service
+import {UploadImageService} from './service/upload-image.service';
+
 // region: third libs
 import { CountdownModule } from 'ngx-countdown';
 import { NzSchemaFormModule } from 'nz-schema-form';
+import { LightboxModule, Lightbox } from 'angular2-lightbox';
+import { QuillEditorModule } from 'ngx-quill-editor';
+
 const THIRDMODULES = [
     CountdownModule,
-    NzSchemaFormModule
+    NzSchemaFormModule,
+    LightboxModule,
+    QuillEditorModule
 ];
 // endregion
 
-// region: your componets & directives
-const COMPONENTS = [];
+// region: your componets & directives & pipe
+const COMPONENTS = [MenuManageModalComponent, DishesManageModalComponent, BannerManageModalComponent];
 const DIRECTIVES = [];
+const PIPES = [TimeRangePipe];
+const SERVICES = [Lightbox, UploadImageService];
 // endregion
 
 @NgModule({
@@ -34,12 +52,16 @@ const DIRECTIVES = [];
         ...ABCMODULES,
         AlainACLModule,
         // third libs
-        ...THIRDMODULES
+        ...THIRDMODULES,
+    ],
+    entryComponents: [
+        ...COMPONENTS,
     ],
     declarations: [
         // your components
         ...COMPONENTS,
-        ...DIRECTIVES
+        ...DIRECTIVES,
+        ...PIPES
     ],
     exports: [
         CommonModule,
@@ -54,7 +76,9 @@ const DIRECTIVES = [];
         ...THIRDMODULES,
         // your components
         ...COMPONENTS,
-        ...DIRECTIVES
-    ]
+        ...DIRECTIVES,
+        ...PIPES
+    ],
+    providers: [...PIPES, ...SERVICES]
 })
 export class SharedModule { }

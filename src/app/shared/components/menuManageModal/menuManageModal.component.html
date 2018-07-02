@@ -1,0 +1,63 @@
+<div>
+    <form nz-form [nzLayout]="'horizontal'">
+        <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSpan]="4">
+                <label>日期</label>
+            </div>
+            <div nz-form-control nz-col [nzSpan]="16">
+                <!-- <nz-select [(ngModel)]="day" name="day" [nzPlaceHolder]="''" >
+                    <nz-option 
+                        *ngFor="let item of daylist" 
+                        [nzLabel]="item.label"
+                        [nzValue]="item.value">
+                    </nz-option>
+                </nz-select> -->
+                <nz-datepicker [(ngModel)]="_date" name="date" [nzPlaceHolder]="'请选择日期'" [nzDisabledDate]="_disabledDate"></nz-datepicker>
+            </div>
+        </div>
+        <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSpan]="4">
+                <label>时段</label>
+            </div>
+            <div nz-form-control nz-col [nzSpan]="16">
+                <nz-select [(ngModel)]="rangeType" name="time" [nzPlaceHolder]="''" >
+                    <nz-option 
+                        *ngFor="let item of timelist" 
+                        [nzLabel]="item.label"
+                        [nzValue]="item.value">
+                    </nz-option>
+                </nz-select>
+                
+            </div>
+        </div>
+        <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSpan]="4">
+                <label>菜式</label>
+            </div>
+            <div nz-form-control nz-col [nzSpan]="16">
+                <nz-select [(ngModel)]="menu_ids" name="menu_ids" [nzPlaceHolder]="''" [nzMode]="'multiple'"  *ngIf="type==='C'">
+                    <nz-option 
+                        *ngFor="let item of disheslist" 
+                        [nzLabel]="item.name"
+                        [nzValue]="item.id">
+                    </nz-option>
+                </nz-select>
+                <nz-select [(ngModel)]="menu_id" name="menu_id" [nzPlaceHolder]="''" *ngIf="type==='U'">
+                    <nz-option 
+                        *ngFor="let item of disheslist" 
+                        [nzLabel]="item.name"
+                        [nzValue]="item.id">
+                    </nz-option>
+                </nz-select>
+            </div>
+        </div>
+    </form>
+    <div class="customize-footer">
+        <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="handleEnsure()" [style.marginRight]="'15px'">
+            确认
+        </button>
+        <button nz-button [nzType]="'default'" [nzSize]="'large'" (click)="handleCancel()">
+            取消
+        </button>
+    </div>
+</div>

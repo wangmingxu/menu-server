@@ -1,0 +1,70 @@
+<div>
+    <form nz-form [nzLayout]="'horizontal'">
+        <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSpan]="4">
+                <label>图片</label>
+            </div>
+            <div nz-form-control nz-col [nzSpan]="16">
+                <nz-upload class="image-uploader" nzName="image" [nzShowUploadList]="false" (nzChange)="handleChange($event)">
+                    <i *ngIf="!imageUrl" class="anticon anticon-plus image-uploader-trigger"></i>
+                    <img *ngIf="imageUrl" [src]="imageUrl" class="image">
+                </nz-upload>
+            </div>
+        </div>
+        <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSpan]="4">
+                <label>跳转文章</label>
+            </div>
+            <div nz-form-control nz-col [nzSpan]="16">
+                <nz-select [(ngModel)]="article" (ngModelChange)="onArticleChange($event)" name="article" [nzPlaceHolder]="'请选择文章'">
+                    <nz-option [nzLabel]="'自定义文章链接'" [nzValue]="0"></nz-option>
+                    <nz-option 
+                        *ngFor="let item of articleList" 
+                        [nzLabel]="item.title"
+                        [nzValue]="item.id">
+                    </nz-option>
+                </nz-select>
+            </div>
+        </div>
+        <div nz-form-item nz-row *ngIf="article===0">
+            <div nz-form-label nz-col [nzSpan]="4">
+                <label>跳转地址</label>
+            </div>
+            <div nz-form-control nz-col [nzSpan]="16">
+                <nz-input [(ngModel)]="targetUrl" name="targetUrl" [nzPlaceHolder]="'该地址域名必须已经在小程序后台配置白名单'"></nz-input>
+            </div>
+        </div>
+        <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSpan]="4">
+                <label>序号</label>
+            </div>
+            <div nz-form-control nz-col [nzSpan]="16">
+                <nz-input [(ngModel)]="sort" name="sort" [nzPlaceHolder]="'请填写序号，序号越大排序越靠前'"></nz-input>
+            </div>
+        </div>
+        <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSpan]="4">
+                <label>生效时间</label>
+            </div>
+            <div nz-form-control nz-col [nzSpan]="16">
+                <nz-datepicker [(ngModel)]="start_at" name="start_at" [nzPlaceHolder]="'请选择开始时间'"></nz-datepicker>
+            </div>
+        </div>
+        <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSpan]="4">
+                <label>失效时间</label>
+            </div>
+            <div nz-form-control nz-col [nzSpan]="16">
+                <nz-datepicker [(ngModel)]="end_at" name="end_at" [nzPlaceHolder]="'请选择结束时间'"></nz-datepicker>
+            </div>
+        </div>
+    </form>
+    <div class="customize-footer">
+        <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="handleEnsure()" [style.marginRight]="'15px'">
+            确认
+        </button>
+        <button nz-button [nzType]="'default'" [nzSize]="'large'" (click)="handleCancel()">
+            取消
+        </button>
+    </div>
+</div>

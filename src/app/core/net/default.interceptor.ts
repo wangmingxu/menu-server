@@ -35,17 +35,23 @@ export class DefaultInterceptor implements HttpInterceptor {
                 // 业务层级错误处理，以下假如响应体的 `status` 若不为 `0` 表示业务级异常
                 // 并显示 `error_message` 内容
 
-                // const body: any = event instanceof HttpResponse && event.body;
-                // if (body && body.status !== 0) {
-                //     this.msg.error(body.error_message);
-                //     // 继续抛出错误中断后续所有 Pipe、subscribe 操作，因此：
-                //     // this.http.get('/').subscribe() 并不会触发
-                //     return ErrorObservable.throw(event);
-                // }
+                const body: any = event instanceof HttpResponse && event.body;
+                if (body && body.code !== 0) {
+                    this.msg.error(body.msg);
+                    if (body.code === 1002) {
+                        this.goTo('/passport/login');
+                    }
+                    if (body.code === 1001) {
+                        this.goTo('/');
+                    }
+                    // 继续抛出错误中断后续所有 Pipe、subscribe 操作，因此：
+                    // this.http.get('/').subscribe() 并不会触发
+                    return ErrorObservable.throw(event);
+                }
                 break;
-            case 401: // 未登录状态码
-                this.goTo('/passport/login');
-                break;
+            // case 401: // 未登录状态码
+            //     this.goTo('/passport/login');
+            //     break;
             case 403:
             case 404:
             case 500:

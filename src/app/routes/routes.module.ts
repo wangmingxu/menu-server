@@ -18,6 +18,10 @@ import { UserListComponent } from './user-list/user-list.component';
 import { DishesListComponent } from './dishes-list/dishes-list.component';
 import { OrderListComponent } from './order-list/order-list.component';
 import { MenuListComponent } from './menu-list/menu-list.component';
+import { BannerComponent } from './banner/banner.component';
+import { SummaryComponent } from './summary/summary.component';
+import { ArticleEditComponent } from './article-edit/article-edit.component';
+import { ArticleListComponent } from './article/article.component';
 
 @NgModule({
     imports: [ SharedModule, RouteRoutingModule ],
@@ -36,7 +40,11 @@ import { MenuListComponent } from './menu-list/menu-list.component';
         UserListComponent,
         DishesListComponent,
         OrderListComponent,
-        MenuListComponent
+        MenuListComponent,
+        BannerComponent,
+        SummaryComponent,
+        ArticleEditComponent,
+        ArticleListComponent
     ]
 })
 export class RoutesModule {}
